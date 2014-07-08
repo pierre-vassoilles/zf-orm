@@ -1,11 +1,17 @@
 {
-	"name" : "Zf-ORM",
-	"version" : "0.0.1",
-	"require" : {
-		"zendframework/zendframework1" : "=1.12.7"
-	},
-	"repositories" : [ {
-		"type" : "composer",
-		"url" : "https://packagist.org"
-	} ]
+  "name" : "Zf-ORM",
+  "version" : "0.0.1",
+  "require" : {
+    "zendframework/zendframework1" : "=1.12.7",
+    "joseph-lenton/php-error" : "dev-master"
+  },
+  "repositories" : [ {
+    "type" : "composer",
+    "url" : "https://packagist.org"
+  } ],
+  "autoload" : {
+  	"psr-0" : {
+  		"Iplib" : "library/ip/"
+  	}
+  }
 }
