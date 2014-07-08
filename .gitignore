@@ -9,3 +9,4 @@ extras/documentation
 /.vagrant
 /vendor
 /composer.lock
+/node_modules
