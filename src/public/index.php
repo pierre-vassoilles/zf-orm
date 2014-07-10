@@ -12,7 +12,9 @@ define('APP_ENV', getenv('APPLICATION_ENV') ?: 'production');
 
 require_once VENDOR_PATH . DS . 'autoload.php';
 
-//$autoloader = Zend_Loader_Autoloader::getInstance();
+//$loader = Zend_Loader_Autoloader::getInstance();
+
+
 
 // Mise en place de la gestion des erreurs
 if ('development' === APP_ENV) {
@@ -24,10 +26,10 @@ if ('development' === APP_ENV) {
 
 //try {
 	$application = new Zend_Application(
-				APP_ENV, 
+				APP_ENV,
 				APP_PATH . DS . 'Core' . DS . 'configs' . DS . 'application.ini'
 	);
-	
+
 	$application->bootstrap()->run();
 /*} catch (Zend_Config_Exception $e) {
 	echo 'Problème de config : ' . $e->getMessage();
@@ -45,9 +47,9 @@ if ('development' === APP_ENV) {
 		echo '<pre>' . $e->getTraceAsString() . '</pre>';
 	}
 }*/
-	
-	
-	
+
+
+
 function exceptionHandler($e)
 {
 	echo 'Erreur de l\'application';

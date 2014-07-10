@@ -1,47 +1,27 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
-        <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <?= $this->headTitle() ?>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Add to homescreen for Chrome on Android -->
-        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 75px;
+                padding-bottom: 20px;
+            }
+        </style>
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/css/main.css">
 
-        <!-- iOS icons -->
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/touch/apple-touch-icon-144x144-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/touch/apple-touch-icon-114x114-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/touch/apple-touch-icon-72x72-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" href="/images/touch/apple-touch-icon-57x57-precomposed.png">
+        <script src="/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
-        <!-- Tile icon for Win8 (144x144 + tile color) -->
-        <meta name="msapplication-TileImage" content="/images/touch/ms-touch-icon-144x144-precomposed.png">
-        <meta name="msapplication-TileColor" content="#3372DF">
-
-        <!-- Generic Icon -->
-        <link rel="shortcut icon" href="/images/touch/touch-icon-57x57.png">
-
-        <!-- SEO: If mobile URL is different from desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-        <!--
-        <link rel="canonical" href="http://www.example.com/">
-        -->
-
-        <!-- Chrome Add to Homescreen -->
-        <link rel="shortcut icon" sizes="196x196" href="/images/touch/touch-icon-196x196.png">
-
-        <!-- For iOS web apps. Delete if not needed. https://github.com/h5bp/mobile-boilerplate/issues/94 -->
-        <!--
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <meta name="apple-mobile-web-app-title" content="">
-        -->
-
-        <!-- build:css styles/components/main.min.css -->
-        <link rel="stylesheet" href="/styles/h5bp.css">
-        <link rel="stylesheet" href="/styles/components/components.css">
-        <link rel="stylesheet" href="/styles/main.css">
-        <!-- endbuild -->
 
         <?= $this->headLink() . PHP_EOL ?>
         <?= $this->headStyle() . PHP_EOL ?>
@@ -49,34 +29,50 @@
         <script src="http://www.project.dev:35729/livereload.js"></script>
     </head>
     <body>
-        <header class="app-bar promote-layer">
-            <div class="app-bar-container">
-                <button class="menu"><img src="/images/hamburger.svg"></button>
-                <h1 class="logo">Web Starter Kit</h1>
-                <section class="app-bar-actions">
-                <!-- Put App Bar Buttons Here -->
-                </section>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">Blog</a>
+              <ul class="nav navbar-nav navbar-left">
+                  <li>
+                    <a href="/">Home</a>
+                  </li>
+                  <li>
+                    <a href="/create">Créer</a>
+                  </li>
+              </ul>
             </div>
-        </header>
+          </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-10">
+		             <?= $this->layout()->content ?>
+    			</div>
+                <div class="col-lg-1"></div>
+            </div>
+        </div>
 
-        <nav class="navdrawer-container promote-layer">
-            <h4>Navigation</h4>
-            <ul>
-                <li><a href="#hello">Hello</a></li>
-                <li><a href="#get-started">Get Started</a></li>
-                <li><a href="/styleguide/index.html">Style Guide</a></li>
-            </ul>
-        </nav>
-
-        <main>
-			<?= $this->layout()->content ?>
-        </main>
-
-        <!-- build:js scripts/main.min.js -->
-        <script src="/scripts/main.js"></script>
-        <!-- endbuild -->
         <?php $this->inlineScript()->prependFile('/assets/jquery/dist/jquery.min.js', 'text/javascript')?>
+        <?php $this->inlineScript()->appendFile('/js/vendor/bootstrap.min.js', 'text/javascript')?>
         <?= $this->inlineScript() . PHP_EOL ?>
+        <!-- build:js scripts/main.min.js -->
+        <script src="/js/main.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function(){
+            $('a').tooltip();
+        });
+        </script>
         <!-- Built with love using Web Starter Kit -->
     </body>
 </html>

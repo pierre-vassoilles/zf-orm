@@ -1,8 +1,17 @@
 <?php $this->headTitle("Page d'accueil")?>
+<?php foreach ($this->entries as $entry) :?>
+<div class="panel panel-default">
+    <div class='panel-heading'>
+        <?= $entry->title ?>
+        <span class="label label-<?= $entry->categorie->color ?>" style="margin-left:10px;"><?= $entry->categorie->nom ?></span>
+        <a href="<?= $this->url(array('id' => $entry->id), 'coreIndexDelete') ?>" title="Supprimer #<?= $entry->id?>" style="float:right;"><span class="glyphicon glyphicon-remove"></span></a>
+        <a href="<?= $this->url(array('id' => $entry->id), 'coreIndexView') ?>" title="Voir #<?= $entry->id?>" style="float:right;"><span class="glyphicon glyphicon-plus"></span></a>
+    </div>
+    <div class='panel-body'><?= $entry->content ?></div>
+    <div class='panel-footer'><small>Publié le <?= $entry->published_date?> par <?= $entry->author->username?> (<a href="<?= $entry->author->url?>" target='_BLANK'><?= $entry->author->url?></a>)</small></div>
+</div>
+<?php endforeach;?>
 
-<h1>Index</h1>
-
-<button id="test">TEST JS</button>
 
 <?php // CAPTURE DE SCRIPT ! ?>
 <?php $this->inlineScript()->captureStart()?>
