@@ -1,6 +1,6 @@
 <?php
 
-class Core_Model_Auteur
+class Core_Model_Auteur implements Core_Model_Interface
 {
 
     /**

@@ -1,9 +1,10 @@
+<?php $this->headTitle("Blog - " . $this->article->title)?>
 <div class="panel panel-default">
     <div class="panel-heading">
         <?= $this->article->title ?><span class="label label-<?= $this->article->categorie->color ?>" style="margin-left:10px;"><?= $this->article->categorie->nom ?></span>
     </div>
     <div class="panel-body">
-        <?= $this->article->content ?>
+        <?= html_entity_decode($this->article->content); ?>
     </div>
-    <div class='panel-footer'><small>Publié le <?= $this->article->published_date?> par <?= $this->article->author->username?> (<a href="<?= $this->article->author->url?>" target='_BLANK'><?= $this->article->author->url?></a>)</small></div>
+    <div class='panel-footer'><small>Publi&eacute; le <?= $this->article->published_date?> par <?= $this->article->author->username?> (<a href="<?= $this->article->author->url?>" target='_BLANK'><?= $this->article->author->url?></a>)</small></div>
 </div>

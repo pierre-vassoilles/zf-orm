@@ -10,18 +10,16 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/assets/bootstrap/dist/css/bootstrap.min.css">
         <style>
             body {
                 padding-top: 75px;
                 padding-bottom: 20px;
+            	background-color: #eee;
             }
         </style>
-        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/assets/bootstrap/dist/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="/css/main.css">
-
-        <script src="/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-
 
         <?= $this->headLink() . PHP_EOL ?>
         <?= $this->headStyle() . PHP_EOL ?>
@@ -32,51 +30,28 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-	        <div class="container">
-	            <div class="navbar-header">
-	              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-	                <span class="sr-only">Toggle navigation</span>
-	                <span class="icon-bar"></span>
-	                <span class="icon-bar"></span>
-	                <span class="icon-bar"></span>
-	              </button>
-	              <a class="navbar-brand" href="/">Blog</a>
-	        		<?= $this->navigation()->menu()->setUlClass('nav navbar-nav navbar-left'); ?>
-		        </div>
-	        </div>
-        </div>
         <div class="container">
-        	<div class="row">
-        		<div class="col-lg-1"></div>
-                <div class="col-lg-10">
-                	<ol class="breadcrumb">
-		             <?php
-		              foreach (explode('\\', $this->navigation()->breadcrumbs()->setMinDepth(0)->setRenderInvisible(true)->setSeparator('\\')) as $bc) {
-							echo "<li>$bc</li>";
-					  }
-		             ?>
-		            </ol>
-    			</div>
-                <div class="col-lg-1"></div>
-        	</div>
+
             <div class="row">
-                <div class="col-lg-1"></div>
-                <div class="col-lg-10">
+            	<div class="col-lg-4"></div>
+                <div class="col-lg-4">
 		             <?= $this->layout()->content ?>
     			</div>
-                <div class="col-lg-1"></div>
+    			<div class="col-lg-4"></div>
             </div>
         </div>
 
         <?php $this->inlineScript()->prependFile('/assets/jquery/dist/jquery.min.js', 'text/javascript')?>
-        <?php $this->inlineScript()->appendFile('/js/vendor/bootstrap.min.js', 'text/javascript')?>
+        <?php $this->inlineScript()->appendFile('/assets/bootstrap/dist/js/bootstrap.min.js', 'text/javascript')?>
+        <?php $this->inlineScript()->appendFile('/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js', 'text/javascript')?>
         <?php $this->inlineScript()->appendFile('/assets/tinymce/tinymce.min.js', 'text/javascript')?>
+        
         <?= $this->inlineScript() . PHP_EOL ?>
         <!-- build:js scripts/main.min.js -->
         <script src="/js/main.js"></script>
         <script type="text/javascript">
         $(document).ready(function(){
+            $('a.dropdown-toggle').append("<span class='caret'></span>");
             $('a').tooltip();
             tinymce.init({
                 selector: "textarea"

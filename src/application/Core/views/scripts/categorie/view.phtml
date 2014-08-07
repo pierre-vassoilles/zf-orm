@@ -1,22 +1,12 @@
-<?php $this->headTitle("Blog - Page d'accueil")?>
-<?php foreach ($this->entries as $entry) :?>
+<?php $this->headTitle("Blog - CatÈgorie " . $this->categorie->getNom());?>
+<?php foreach ($this->articles as $entry) :?>
 <div class="panel panel-default">
     <div class='panel-heading'>
         <span class="label label-<?= $entry->categorie->color ?>" style="margin-right:10px;"><?= $entry->categorie->nom ?><?php if($entry->categorie->parent_categ !== null) {echo ' / ' . $entry->categorie->parent_categ->nom;}?></span>
         <a href="<?= $this->url(array('id' => $entry->id), 'coreIndexView') ?>"><strong><?= $entry->title ?></strong></a>
-        <a href="<?= $this->url(array('id' => $entry->id), 'coreIndexDelete') ?>" title="Supprimer #<?= $entry->id?>" style="float:right;"><span class="glyphicon glyphicon-remove"></span></a>       
+        <a href="<?= $this->url(array('id' => $entry->id), 'coreIndexDelete') ?>" title="Supprimer #<?= $entry->id?>" style="float:right;"><span class="glyphicon glyphicon-remove"></span></a>
     </div>
     <div class='panel-body'><?= (strlen($entry->content) > 254 ? substr(preg_replace("/<[^>]*>/", "", html_entity_decode($entry->content)), 0 , 255) . '...' : html_entity_decode($entry->content)); ?></div>
     <div class='panel-footer'><small>Publi√© le <?= $entry->published_date?> par <?= $entry->author->username?> (<a href="<?= $entry->author->url?>" target='_BLANK'><?= $entry->author->url?></a>)</small></div>
 </div>
 <?php endforeach;?>
-
-
-<?php // CAPTURE DE SCRIPT ! ?>
-<?php $this->inlineScript()->captureStart()?>
-$(document).ready(function(){
-	$('#test').on("click", function(){
-		alert("JS OK");
-	});
-});
-<?php $this->inlineScript()->captureEnd()?>

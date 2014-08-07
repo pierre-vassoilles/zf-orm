@@ -5,12 +5,12 @@ class Core_Model_DbTable_Auteur extends Zend_Db_Table_Abstract
     /**
      * @var unknown
      */
-    protected $_name = 'author';
+    protected $_name = Core_Model_Mapper_Auteur::TABLE;
 
     /**
      * @var unknown
      */
-    protected $_primary = 'id';
+    protected $_primary = Core_Model_Mapper_Auteur::COL_ID;
 
 
     /**

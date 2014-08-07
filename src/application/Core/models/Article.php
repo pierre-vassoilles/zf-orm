@@ -1,6 +1,6 @@
 <?php
 
-class Core_Model_Article
+class Core_Model_Article implements Core_Model_Interface
 {
 
     /**
@@ -111,7 +111,12 @@ class Core_Model_Article
      */
     public function setAuthor($author)
     {
-        $this->author = $author;
+    	if ($author instanceof Core_Model_Auteur) {
+    		$this->author = $author;
+    	} elseif (!$author instanceof Core_Model_Auteur && 0 !== (int) $author) {
+    		$mapperAuthor = new Core_Model_Mapper_Auteur();    		
+        	$this->author = $mapperAuthor->find($author);
+    	}
         return $this;
     }
 
@@ -129,8 +134,11 @@ class Core_Model_Article
     public function setCategorie($categorie)
     {
         if(!$categorie instanceof Core_Model_Categorie && 0 !== (int) $categorie){
-            $categ = new Core_Model_Categorie();
-            $categ->setId($categorie);
+            $mapperCateg = new Core_Model_Mapper_Categorie();
+        	$categ = $mapperCateg->find($categorie);
+        	if(null === $categ) {
+        		throw new Zend_Db_Table_Exception('La catégorie sélectionnée n\'existe pas !');
+        	}
         }else{
             $categ = $categorie;
         }

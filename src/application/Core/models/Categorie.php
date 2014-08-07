@@ -1,6 +1,6 @@
 <?php
 
-class Core_Model_Categorie
+class Core_Model_Categorie implements Core_Model_Interface
 {
     /**
      * @var number
@@ -18,6 +18,10 @@ class Core_Model_Categorie
      * @var array of Core_Model_Article
      */
     private $articles = array();
+    /**
+     * @var Core_Model_Categorie 
+     */
+    private $parent_categ;
 
 
 	/**
@@ -93,6 +97,20 @@ class Core_Model_Categorie
         $this->articles[] = $art;
         return $this;
     }
+    /**
+     * @return the $parent_categ
+     */
+    public function getParent_categ() {
+    	return $this->parent_categ;
+    }
+    
+    /**
+     * @param Core_Model_Categorie $parent_categ
+     */
+    public function setParent_categ($parent_categ) {
+    	$this->parent_categ = $parent_categ;
+    	return $this;
+    }
 
 	/**
      * Getter générique
@@ -103,5 +121,7 @@ class Core_Model_Categorie
         $method = 'get' . ucfirst($attr);
         return $this->$method();
     }
+
+  
 
 }

@@ -1,0 +1,21 @@
+<div class="page-header"><h2>Cat&eacute;gories</h2></div>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>Nom</th>
+			<th>Nombre d'articles</th>
+			<th>Couleur</th>
+			<th>Parent</th>
+		</tr>
+	</thead>
+	<?php 
+		foreach($this->categories as $categ) {
+			echo "<tr>";
+			echo "<td><a href='/categorie/" . $categ->getId() . "'>" . $categ->getNom() . "</a></td>";
+			echo "<td>" . count($categ->getArticles()) . "</td>";
+			echo "<td><span class='label label-" . $categ->getColor() . "'>" . $categ->getColor() . "</span></td>";
+			echo "<td>" . ($categ->getParent_categ() !== null ? $categ->getParent_categ()->getNom() : "Pas de parent") . "</td>";
+			echo "</tr>";
+		}
+	?>
+</table>

@@ -24,6 +24,10 @@ if ('development' === APP_ENV) {
 	set_error_handler(array('\Iplib\Error', 'handleError'));
 }
 
+
+set_include_path(get_include_path() . PATH_SEPARATOR . APP_PATH);
+
+
 //try {
 	$application = new Zend_Application(
 				APP_ENV,

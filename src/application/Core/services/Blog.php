@@ -38,6 +38,14 @@ class Core_Service_Blog
         $article = $mapper->find($id);
         return $article;
     }
+    
+    public function fetchLastArticlesByCategories($idCategorie)
+    {
+
+    	$mapper = new Core_Model_Mapper_Article();
+    	$where = array(Core_Model_Mapper_Article::COL_CAT . " = ?" => $idCategorie);
+    	return $mapper->fetchAll($where, 'id DESC');
+    }
 
     /**
      * Supprime un article dont l'indentifiant est passé en paramètre
@@ -73,9 +81,34 @@ class Core_Service_Blog
         return $categ;
     }
 
-    public function fetchAllCategories()
+    public function fetchAllCategories($asArray = false)
     {
         $mapper = new Core_Model_Mapper_Categorie();
-        return $mapper->fetchAll(null, 'nom ASC');
+        $result = $mapper->fetchAll(null, 'nom ASC');
+        if(!$asArray) {        	
+        	return $result;
+        } else {
+        	$resArray = array();
+        	foreach($result as $categ){
+        		$resArray[$categ->getId()] = html_entity_decode($categ->getNom());
+        	}
+        	return $resArray;
+        }
+    }
+    
+    
+    public function fetchAllAuthors($asArray = false)
+    {
+    	$mapper = new Core_Model_Mapper_Auteur();
+    	$result = $mapper->fetchAll(null, 'fullname ASC');
+    	if (!$asArray) {
+    		return $result; 
+    	} else {
+    		$arrayAuteurs = array();
+    		foreach($result as $auteur){
+    			$arrayAuteurs[$auteur->getId()] = html_entity_decode($auteur->getUsername() . ' - ' . $auteur->getFullname());
+    		}
+    		return $arrayAuteurs;
+    	}
     }
 }

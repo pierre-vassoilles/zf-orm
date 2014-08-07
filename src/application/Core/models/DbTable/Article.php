@@ -5,26 +5,26 @@ class Core_Model_DbTable_Article extends Zend_Db_Table_Abstract
     /**
      * @var string
      */
-    protected $_name = 'entries';
+    protected $_name = Core_Model_Mapper_Article::TABLE;
 
     /**
      * @var string
      */
-    protected $_primary = 'id';
+    protected $_primary = Core_Model_Mapper_Article::COL_ID;
 
 
     protected $_referenceMap = array(
     	'FK_categorie'=> array(
-            'columns' => array('categorie'),
+            'columns' => array(Core_Model_Mapper_Article::COL_CAT),
     	    'refTableClass' => 'Core_Model_DbTable_Categorie',
-    	    'refColumns' => array('id'),
+    	    'refColumns' => array(Core_Model_Mapper_Categorie::COL_ID),
     	    'onUpdate' => self::CASCADE,
     	    'onDelete' => self::RESTRICT
         ),
         'FK_auteur'=> array(
-            'columns' => array('author_id'),
+            'columns' => array(Core_Model_Mapper_Article::COL_AUTH),
             'refTableClass' => 'Core_Model_DbTable_Auteur',
-            'refColumns' => array('id'),
+            'refColumns' => array(Core_Model_Mapper_Auteur::COL_ID),
             'onUpdate' => self::CASCADE,
             'onDelete' => self::RESTRICT
         )

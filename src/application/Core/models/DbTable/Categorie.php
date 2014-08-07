@@ -5,12 +5,12 @@ class Core_Model_DbTable_Categorie extends Zend_Db_Table_Abstract
     /**
      * @var string
      */
-    protected $_name = 'categories';
+    protected $_name = Core_Model_Mapper_Categorie::TABLE;
 
     /**
      * @var string
      */
-    protected $_primary = 'id';
+    protected $_primary = Core_Model_Mapper_Categorie::COL_ID;
 
     /**
      * @var array
@@ -19,6 +19,15 @@ class Core_Model_DbTable_Categorie extends Zend_Db_Table_Abstract
     	'Core_Model_DbTable_Article'
     );
 
+    protected $_referenceMap = array(
+    		'FK_parent_categorie'=> array(
+    				'columns' => array(Core_Model_Mapper_Categorie::COL_PARENT),
+    				'refTableClass' => 'Core_Model_DbTable_Categorie',
+    				'refColumns' => array(Core_Model_Mapper_Categorie::COL_ID),
+    				'onUpdate' => self::CASCADE,
+    				'onDelete' => self::RESTRICT
+    		)
+    );
 
 	/**
      * @return the $_name

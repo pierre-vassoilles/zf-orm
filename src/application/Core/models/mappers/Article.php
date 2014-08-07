@@ -1,69 +1,20 @@
 <?php
 
-class Core_Model_Mapper_Article
+class Core_Model_Mapper_Article extends Core_Model_Mapper_MapperAbstract
 {
-    protected $dbTable;
+	
+	const TABLE = 'entries';
+	const COL_ID = 'id';
+	const COL_TITLE = 'title';
+	const COL_CONTENT = 'content';
+	const COL_DATE = 'published_date';
+	const COL_AUTH = 'author_id';
+	const COL_CAT = 'categorie';
 
-    public function __construct()
-    {
-        $this->dbTable = new Core_Model_DbTable_Article();
-    }
+	//protected $dbTableClassname = 'Core_Model_DbTable_Article';
 
-    public function find($id)
-    {
-        $row = $this->dbTable->find($id)->current();
-        return $this->rowToObject($row);
-    }
 
-    public function fetchAll($where = null, $order = null, $count = null, $offset = null)
-    {
-        $rowset = $this->dbTable->fetchAll($where, $order, $count, $offset);
 
-        $articles = array();
-        if (0 === count($rowset)) {
-            return $articles;
-        }
-        foreach ($rowset as $row) {
-            $articles[] = $this->rowToObject($row);
-        }
-        return $articles;
-    }
-
-    /**
-     * Supprime l'article dont l'indentifiant est en paramètre
-     * @param number $id
-     * @throws Zend_Db_Table_Row_Exception
-     * @return boolean
-     */
-    public function delete($id)
-    {
-        $row = $this->dbTable->find($id)->current();
-        if(!$row instanceof Zend_Db_Table_Row_Abstract) {
-            throw new Zend_Db_Table_Row_Exception("Impossible de supprimer l'article n°$id");
-        }
-        return (bool) $row->delete();
-    }
-
-    /**
-     * Méthode insert or update d'un objet Core_Model_Article
-     * @param Core_Model_Article $article
-     */
-    public function save(Core_Model_Article $article)
-    {
-        $origin = $this->dbTable->find($article->getId())->current();
-        $row = $this->objectToRow($article);
-        if($origin instanceof Zend_Db_Table_Row_Abstract){
-            //update
-            $where = array('id = ?' => $article->getId());
-            $this->dbTable->update($row, $where);
-        }else{
-            //insert
-            unset($row['id']);
-            $row['published_date'] = date("Y-m-d");
-            $this->dbTable->insert($row);
-        }
-
-    }
 
     /**
      * Transforme une ligne de base de données Zend_Db_Table_Row en objet Core_Model_Article
@@ -81,10 +32,10 @@ class Core_Model_Mapper_Article
 
         $article = new Core_Model_Article();
         $article->setAuthor($auteur)
-                ->setContent($row['content'])
-                ->setTitle($row['title'])
-                ->setPublished_date($row['published_date'])
-                ->setId($row['id'])
+                ->setContent($row[self::COL_CONTENT])
+                ->setTitle($row[self::COL_TITLE])
+                ->setPublished_date($row[self::COL_DATE])
+                ->setId($row[self::COL_ID])
                 ->setCategorie($categ);
 
         $categ->addArticle($article);
@@ -97,15 +48,15 @@ class Core_Model_Mapper_Article
      * @param Core_Model_Article $article
      * @return Array
      */
-    public function objectToRow(Core_Model_Article $article)
+    public function objectToRow(Core_Model_Interface $article)
     {
         return array(
-          'id' => $article->getId(),
-            'title' => $article->getTitle(),
-            'content' => $article->getContent(),
-            'published_date' => $article->getPublished_date(),
-            'author_id' => $article->getAuthor(),
-            'categorie' => $article->getCategorie()->getId()
+           self::COL_ID => $article->getId(),
+           self::COL_TITLE => $article->getTitle(),
+           self::COL_CONTENT => $article->getContent(),
+           self::COL_DATE => $article->getPublished_date(),
+           self::COL_AUTH => $article->getAuthor()->getId(),
+           self::COL_CAT => $article->getCategorie()->getId()
         );
     }
 
@@ -116,16 +67,38 @@ class Core_Model_Mapper_Article
      */
     public function formToArticle(Zend_Form $form)
     {
-        $arrayForm = $form->getValues();
-        $article = new Core_Model_Article();
-        foreach($arrayForm as $key => $val)
-        {
-            $method = 'set' . ucfirst($key);
-            if(method_exists($article, $method)){
-                $article->$method(htmlspecialchars($val));
-            }
-        }
-        return $article;
+        return $this->arrayToObject($form->getValues());
+    }
+    
+    /**
+     * Transforme un Array en Core_Model_Article
+     * @param Zend_Form $form
+     * @return Core_Model_Article
+     */
+    public function arrayToObject(array $array = array())
+    {
+    	$article = new Core_Model_Article();
+    	
+    	if(array_key_exists('id', $array)) {
+    		$article->setId($array['id']);
+    	}
+    	$article->setContent($array['content'])
+    			->setTitle($array['title']);
+    	
+    	$mapperCateg = new Core_Model_Mapper_Categorie();
+    	$article->setCategorie($mapperCateg->find($array['categorie']));
+    	
+    	$mapperAuthor = new Core_Model_Mapper_Auteur();
+    	$article->setAuthor($mapperAuthor->find($array['author']));
+    	
+    	/*foreach($array as $key => $val)
+    	{
+    		$method = 'set' . ucfirst($key);
+    		if(method_exists($article, $method)){
+    			$article->$method(htmlspecialchars($val));
+    		}
+    	}*/
+    	return $article;
     }
 
 
