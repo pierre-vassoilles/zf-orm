@@ -42,9 +42,20 @@
 		              <a class="navbar-brand" href="/">Blog</a>
 		             </div>
 		             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		             <?php 
+		             	$auth = Zend_Auth::getInstance();
+		             	if($auth->hasIdentity()){
+		             		$roleId = $auth->getIdentity()->getRoleId();
+		             	} else {
+							$roleId = 'Guest';
+						}
+		             ?>
 			      			<?php 
-			      			$this->navigation()->menu()->setPartial(array('partial/navigation.phtml','Core'))  . PHP_EOL; 
-			      			echo $this->navigation()->menu()->render();
+			      			echo $this->navigation()
+			      					  ->setAcl(Zend_Registry::get('Zend_Acl'))
+			      					  ->setRole($roleId)
+			      					  ->menu()
+			      					  ->setPartial(array('partial/navigation.phtml','Core'))  . PHP_EOL;
 			      			?>
 			    	 </div><!-- /.navbar-collapse -->
 		        </div>

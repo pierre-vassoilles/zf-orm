@@ -1,24 +1,17 @@
 <?php
 
-class Core_Model_DbTable_Auteur extends Zend_Db_Table_Abstract
+class Core_Model_DbTable_User extends Zend_Db_Table_Abstract
 {
     /**
      * @var unknown
      */
-    protected $_name = Core_Model_Mapper_Auteur::TABLE;
+    protected $_name = Core_Model_Mapper_User::TABLE;
 
     /**
      * @var unknown
      */
-    protected $_primary = Core_Model_Mapper_Auteur::COL_ID;
+    protected $_primary = Core_Model_Mapper_User::COL_ID;
 
-
-    /**
-     * @var array
-     */
-    protected $_dependentTables = array(
-        'Core_Model_DbTable_Article'
-    );
 
 
 	/**
@@ -37,13 +30,6 @@ class Core_Model_DbTable_Auteur extends Zend_Db_Table_Abstract
         return $this->_primary;
     }
 
-	/**
-     * @return the $_dependentTables
-     */
-    public function getDependentTables()
-    {
-        return $this->_dependentTables;
-    }
 
 	/**
      * @param Ambigous <string, unknown> $_name
@@ -62,18 +48,6 @@ class Core_Model_DbTable_Auteur extends Zend_Db_Table_Abstract
         $this->_primary = $_primary;
         return $this;
     }
-
-	/**
-     * @param multitype: $_dependentTables
-     */
-    public function setDependentTables(array $_dependentTables)
-    {
-        $this->_dependentTables = $_dependentTables;
-        return $this;
-    }
-
-
-
 
 
 }

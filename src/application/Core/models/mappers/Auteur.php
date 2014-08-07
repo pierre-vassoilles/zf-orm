@@ -12,10 +12,10 @@ class Core_Model_Mapper_Auteur extends Core_Model_Mapper_MapperAbstract
 	//protected $dbTableClassname = 'Core_Model_DbTable_Auteur';
 
     /**
-     * Transforme une ligne de base de données Zend_Db_Table_Row en objet Core_Model_Categorie
+     * Transforme une ligne de base de données Zend_Db_Table_Row en objet Core_Model_Auteur
      *
      * @param Zend_Db_Table_Row $row
-     * @return Core_Model_Categorie
+     * @return Core_Model_Auteur
      */
     public function rowToObject(Zend_Db_Table_Row $row)
     {
@@ -30,7 +30,7 @@ class Core_Model_Mapper_Auteur extends Core_Model_Mapper_MapperAbstract
     
     /**
      * Transforme un objet Core_Model_Auteur en tableau de données
-     * @param Core_Model_Auteur $article
+     * @param Core_Model_Auteur $auteur
      * @return Array
      */
     public function objectToRow(Core_Model_Interface $auteur)

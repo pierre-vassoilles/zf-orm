@@ -42,7 +42,7 @@ class Core_Model_Mapper_Categorie extends Core_Model_Mapper_MapperAbstract
     
     /**
      * Transforme un objet Core_Model_Categorie en tableau de données
-     * @param Core_Model_Categorie $article
+     * @param Core_Model_Categorie $categorie
      * @return Array
      */
     public function objectToRow(Core_Model_Interface $categorie)

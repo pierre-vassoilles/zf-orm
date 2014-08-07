@@ -1,6 +1,6 @@
 <?php
 
-class Core_Model_Article implements Core_Model_Interface
+class Core_Model_Article implements Core_Model_Interface, Zend_Acl_Resource_Interface
 {
 
     /**
@@ -155,6 +155,17 @@ class Core_Model_Article implements Core_Model_Interface
         $method = 'get' . ucfirst($attr);
         return $this->$method();
     }
+    
+	/* (non-PHPdoc)
+	 * @see Zend_Acl_Resource_Interface::getResourceId()
+	 */
+	public function getResourceId() {
+		// TODO Auto-generated method stub
+		return 'Article';
+	}
+
+    
+    
 
 
 }

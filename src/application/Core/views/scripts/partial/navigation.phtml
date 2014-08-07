@@ -4,25 +4,26 @@
     // loop root level (only has Home, but later may have an Admin root page?)
    //var_dump($this->container);exit;
     foreach ($this->container as $page) {
-    	
-        // check if it is active (not recursive)
-        $isActive = $page->isActive(false);
-        $liClass = $isActive ? ' class="active ' . (null !== ($page->getPages()) ? 'dropdown' : '') . '"' : (null !== ($page->getPages()) ? 'class = "dropdown"' : ''); 
-         	
-        echo '<li ' . $liClass . '>' . PHP_EOL . $this->menu()->htmlify($page) . PHP_EOL;
-
-        // loop next level
-        if(0 < count($page)) {
-        	echo '<ul class="dropdown-menu" role="menu">', PHP_EOL;
-	        foreach ($page as $page) {
-	            // check if it is active (recursive)
-	            $isActive = $page->isActive(true);
-	            $liClass = $isActive ? ' class="active"' : '';
-	            echo '<li ' . $liClass . '>' . $this->menu()->htmlify($page) . '</li>', PHP_EOL;
+    	if ($page->isVisible() && $this->navigation()->accept($page)) {
+	        // check if it is active (not recursive)
+	        $isActive = $page->isActive(false);
+	        $liClass = $isActive ? ' class="active ' . (null !== ($page->getPages()) ? 'dropdown' : '') . '"' : (null !== ($page->getPages()) ? 'class = "dropdown"' : ''); 
+	         	
+	        echo '<li ' . $liClass . '>' . PHP_EOL . $this->menu()->htmlify($page) . PHP_EOL;
+	
+	        // loop next level
+	        if(0 < count($page)) {
+	        	echo '<ul class="dropdown-menu" role="menu">', PHP_EOL;
+		        foreach ($page as $page) {
+		            // check if it is active (recursive)
+		            $isActive = $page->isActive(true);
+		            $liClass = $isActive ? ' class="active"' : '';
+		            echo '<li ' . $liClass . '>' . $this->menu()->htmlify($page) . '</li>', PHP_EOL;
+		        }
+		        echo "</ul>", PHP_EOL;
 	        }
-	        echo "</ul>", PHP_EOL;
-        }
-        echo '</li>', PHP_EOL;
+	        echo '</li>', PHP_EOL;
+    	}
     }
     echo '</ul>';
     

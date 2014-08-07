@@ -71,8 +71,34 @@ class Core_IndexController extends Zend_Controller_Action
         return $this->_helper->redirector('index');
     }
     
+    public function archiverAction()
+    {
+    	$this->_helper->viewRenderer->setNoRender(true);
+    	
+    	$auth = Zend_Auth::getInstance();
+    	$userAuth = $auth->getIdentity();
+    	
+    	$acl = Zend_Registry::get('Zend_Acl');
+    	
+    	$articleMapper = new Core_Model_Mapper_Article();
+    	$article = $articleMapper->find($this->getRequest()->getParam('id'));
+    	
+    	if($acl->isAllowed($userAuth, $article, 'archiver')) {
+    		var_dump("OK pour l'archive");
+    	} else {
+    		var_dump("NON");
+    	}
+    }
+    
     public function signinAction()
     {
+    	$acl = Zend_Registry::get('Zend_Acl');
+    	if($acl->isAllowed()){
+    		echo 'IP non bannie';
+    	} else {
+    		echo 'IP Bannie';
+    	}
+    	
     	$this->_helper->layout()->setLayout('signin');
     	$request = $this->getRequest();
     	$form = new Core_Form_SignIn();
@@ -93,7 +119,15 @@ class Core_IndexController extends Zend_Controller_Action
     			
     			$authResult = $auth->authenticate($adapter);
     			
-    			if($authResult->getCode() ==  Zend_Auth_Result::SUCCESS) {
+    			if($authResult->isValid()) {
+    				$storage = $auth->getStorage();
+    				
+    				$userMapper = new Core_Model_Mapper_User;
+    				
+    				$storage->write($userMapper->authenticate($adapter->getResultRowObject(null, 'password')));
+    			}
+    			
+    			if($authResult->getCode() ==  Zend_Auth_Result::SUCCESS) {  				
 	    			return $this->_helper->redirector('index');
     			}
     		}
